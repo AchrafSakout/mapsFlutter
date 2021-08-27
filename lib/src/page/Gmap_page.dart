@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_marker_center/src/bloc/bloc.dart';
+import 'package:google_maps_marker_center/test.dart';
 import 'package:provider/provider.dart';
 
 class Gmap extends StatefulWidget {
@@ -86,26 +88,57 @@ class _GmapState extends State<Gmap> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          FloatingActionButton(
-                            onPressed: provmaps.getUserLocation,
-                            backgroundColor: Colors.blueAccent,
-                            child: Icon(
-                              Icons.gps_fixed,
-                              color: Colors.white,
+                          Container(
+                            margin: EdgeInsets.only(right: 20),
+                            height: 50,
+                            width: 58,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(
+                                  color: Colors.blueAccent,
+                                ),
+                                color: Colors.white),
+                            child: IconButton(
+                              icon: SvgPicture.asset(
+                                  "assets/images/indicateur-fixe-gps.svg"),
+                              onPressed: provmaps.getUserLocation,
                             ),
                           ),
-                          ElevatedButton(
+                          SizedBox(
+                            height: 50,
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                              color: Colors.white,
                               onPressed: () {
                                 pos = provmaps.initialposition;
                                 Position nouvelle = Position(
                                   latitude: pos.latitude,
                                   longitude: pos.longitude,
+                                  heading: provmaps.rot,
                                 );
                                 provmaps.addPosAccident(nouvelle);
                                 print(
-                                    "the latitude is: ${nouvelle.latitude} and the longitude is: ${nouvelle.longitude} and the rotation from cameraPosition.tilt is ${provmaps.rot} and the rotation from Position.heading");
+                                    "the latitude is: ${nouvelle.latitude} and the longitude is: ${nouvelle.longitude} and the rotation from cameraPosition.bearing is ${provmaps.rot}");
                               },
-                              child: Text("Take position"))
+                              child: Text(
+                                "take position",
+                                style: TextStyle(
+                                    fontSize: 17, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CounterPage()));
+                              },
+                              child: Text(
+                                "test",
+                                style: TextStyle(fontSize: 30),
+                              )),
                         ],
                       )),
                   Positioned(
@@ -135,7 +168,7 @@ class _GmapState extends State<Gmap> {
                     alignment: Alignment.center,
                     child: ImageIcon(
                       AssetImage("assets/images/car_icon.png"),
-                      size: 80,
+                      size: 60,
                     ),
                   )
                 ],

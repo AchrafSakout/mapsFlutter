@@ -21,6 +21,8 @@ class ProviderMaps with ChangeNotifier {
   BitmapDescriptor customIcon;
   //forcontext
   BuildContext myCon;
+  //camera for Rotation
+  CameraPosition cam;
 
   void getMoveCamera() async {
     List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(
@@ -68,14 +70,20 @@ class ProviderMaps with ChangeNotifier {
       markerId: MarkerId(_posAccident.toString()),
       position: LatLng(pos.latitude, pos.longitude),
       rotation: pos.heading,
+      anchor: const Offset(0.5, 0.8),
       icon: customIcon,
     );
+    print("latitude ${pos.latitude}- longitude ${pos.longitude}");
+    print("rotation ${pos.heading}");
+
+    print("heading ${pos.heading}");
     _posAccident.add(marker);
     notifyListeners();
   }
 
   void onCameraMove(CameraPosition position) async {
     initialposition = position.target;
+    rot = position.bearing;
     //rot = position.tilt;
     notifyListeners();
   }
