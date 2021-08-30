@@ -75,7 +75,6 @@ class ProviderMaps with ChangeNotifier {
     );
     print("latitude ${pos.latitude}- longitude ${pos.longitude}");
     print("rotation ${pos.heading}");
-
     print("heading ${pos.heading}");
     _posAccident.add(marker);
     notifyListeners();

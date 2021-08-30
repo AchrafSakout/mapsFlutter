@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_marker_center/src/bloc/bloc.dart';
-import 'package:google_maps_marker_center/test.dart';
 import 'package:provider/provider.dart';
 
 class Gmap extends StatefulWidget {
@@ -18,7 +17,6 @@ class _GmapState extends State<Gmap> {
     final provmaps = Provider.of<ProviderMaps>(context);
     LatLng pos;
     provmaps.myCon = context;
-    //provmaps.creatMarker(context);
     return provmaps.activegps == false
         ? Scaffold(
             body: Container(
@@ -128,17 +126,6 @@ class _GmapState extends State<Gmap> {
                               ),
                             ),
                           ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CounterPage()));
-                              },
-                              child: Text(
-                                "test",
-                                style: TextStyle(fontSize: 30),
-                              )),
                         ],
                       )),
                   Positioned(
